@@ -1,10 +1,29 @@
 import { Search, User } from "lucide-react";
 import { Link } from "react-router-dom"
-import { IconButton, Dropdown, DropdownTrigger, DropdownContent ,DropdownItem, Switch } from "@/shared";
+import { IconButton, 
+    Dropdown, 
+    DropdownTrigger, 
+    DropdownContent ,
+    DropdownItem, 
+    Switch ,
+    SearchField } from "@/shared";
 import logo from "@/assets/images/logo-1.png"
 import { useState } from "react";
 
 export default function Navbar(){
+
+
+    //Componente de búsqueda 😂😂😂
+
+    const [search , setSearch] = useState("");
+
+    const handleSearch = (value) => {
+        console.log("Buscar:" , value);
+    };
+
+    const handleClear = () => {
+        console.log("Campo limpiado")
+    };
 
     // Estado que controla el switch
     const [isActive, setIsActive] = useState(true);
@@ -28,17 +47,18 @@ export default function Navbar(){
                 <div className="flex h-16 items-center justify-between">
 
                     {/* Este logo esta dentro de la segunda caja */}
-                    <div className="flex items-center">
-                        <Link to={"/"} className="text-h1 font-heading ">
+                    <div className="flex items-center hidden sm:inline-flex">
+                        <Link to={"/dashboard/home"} className="text-h1 font-heading ">
                             <img src={logo} alt="" className="h-12" />
                         </Link>
                     </div>
 
-                    {/* SWITCHHHHHHHHHHHHHHHHH */}
+                    {/* SWITCHH */}
                     <Switch
                         checked={isActive}
                         onChange={handleStatusChange}
                         size="md"
+                        className= "hidden sm:inline-flex"
                     />
 
                     {/* Links de navegación */}
@@ -56,21 +76,31 @@ export default function Navbar(){
                         </li>
 
                         <li>
-                            <Link to={"/lavadora"} className="hover:text-primary transition">Lavadora</Link>
+                            <Link to={"/lavadora"} className="hover:text-primary transition">Redes</Link>
                         </li>
+
                     </ul>
-                    {/* Seccion de la derecha: busqueda + usuario */}
+                        <SearchField
+                        value={search}
+                        onChange={setSearch}
+                        onsubmit={handleSearch}
+                        onClear={handleClear}
+                        placeholder="Buscar Productos..."
+                        size= "md"
+                        variant="outlined"
+                        className = "w-76"
+                            />
                     <div className="flex items-center gap-4">
                             {/* Icono de Buscador */}
                         <div className="relative hidden sm:block">
                             <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-gray-500"/>
                         
                             {/* Input */}
-                        <input
+                        {/* <input
                             type="text"
                             placeholder="Buscar en mileroticos"
                             className="pl-9 pr-4 py-2.5 border rounded-lg text-body focus:outline-none focus:ring-2 focus:ring-text-primary"
-                        />
+                        /> */}
                         </div>
 
                             {/* Icono del usuario */}
@@ -80,7 +110,7 @@ export default function Navbar(){
                             </IconButton>
                         </button> */}
 
-                        <div className="p-10">
+                        <div className="p-10 ">
                             <Dropdown>
                                 <DropdownTrigger>
                                     <IconButton ariaLabel="Menú de usuario">
@@ -104,6 +134,12 @@ export default function Navbar(){
                                     <DropdownItem>
                                         <Link to="/dashboard/auth" className="block w-full">
                                             Cerrar sesión
+                                        </Link>
+                                    </DropdownItem>
+
+                                    <DropdownItem>
+                                        <Link to="/dashboard/UserList" className="block w-full">
+                                        Gestionar Usuarios
                                         </Link>
                                     </DropdownItem>
 
