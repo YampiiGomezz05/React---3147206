@@ -16,16 +16,16 @@
         // Desestructuramos explícitamente las propiedades esperadas
         // Esto hace el contrato de datos claro y evita acceder a propiedades inexistentes
         const {
-        name,
+        userName,
         userEmail,
-        phone,
-        documentType,
-        documentNumber,
-        password,
-        avatarUrl,
+        userPhone,
+        userDocumentType,
+        userDocumentNumber,
+        userPassword,
+        userImage,
         isStaff,
         isActive,
-        isSuperuser,
+        isSuperUser,
         } = userData;
 
 
@@ -53,16 +53,16 @@
         // Array de valores que se pasan al query
         // El orden debe coincidir EXACTAMENTE con los placeholders del SQL
         const values = [
-        name,
+        userName,
         userEmail,
-        phone,
-        documentType,
-        documentNumber,
-        password,
-        avatarUrl,
+        userPhone,
+        userDocumentType,
+        userDocumentNumber,
+        userPassword,
+        userImage,
         isStaff,
         isActive,
-        isSuperuser,
+        isSuperUser,
         ];
 
 

@@ -1,19 +1,24 @@
-// Importamos Router desde Express.
-// Router permite modularizar las rutas por feature
-// y mantener el archivo principal de la app limpio.
 import { Router } from "express";
+import { userController } from "./user.controller.js";
+import { authenticateToken } from "../middlewares/auth.middleware.js";
+import multer from "multer";
 
+// Creamos un router independiente para las rutas del modulo de usuarios.
+// Este router se monta en app.js bajo el prefijo /api/users.
+const router = Router();
 
-// Importamos el controlador de usuarios.
-// El router nunca implementa lógica,
-// solo delega la ejecución al controller.
-// Definimos la ruta para crear un usuario
-// POST /users
-// Cuando se recibe una petición POST en la raíz del recurso,
-// Express ejecuta el método create del controller.
-router.post("/", userController.create);
+// Multer permite recibir datos enviados como multipart/form-data.
+// En este caso no se define storage, por eso los archivos quedan en memoria.
+const upload = multer({dest: "uploads/"}); 
 
+// Ruta para crear usuarios.
+// Orden de ejecucion:
+// 1. authenticateToken valida que la peticion tenga un JWT valido.
+// 2. upload.any() procesa los campos y archivos enviados desde el FormData.
+// 3. userController.create maneja la creacion del usuario.
+router.post("/",
+    upload.any("userImage"), 
+    userController.create
+);
 
-// Exportamos el router para ser registrado en la aplicación principal
-// (ej: app.use("/users", router))
 export default router;
